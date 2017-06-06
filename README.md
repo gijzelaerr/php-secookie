@@ -6,7 +6,7 @@ Very simple Cookie and PHP Session library.
 
 * PHP >= 5.4 support for CentOS 7;
 * Replace complicated `setcookie()` which is not secure by default (`HttpOnly`, 
-  `Secure`, `SameSite` are not the default;
+  `Secure`, `SameSite` are not the default);
 * [delight-im/cookie](https://github.com/delight-im/PHP-Cookie) and 
   [paragonie/cookie](https://github.com/paragonie/PHP-Cookie), in addition to 
   requiring PHP >= 5.6, parse cookies, which is a liability;
@@ -41,9 +41,9 @@ linked in the resources below.
 
 # Security
 
-It is also **very** important that you update your PHP settings in `php.ini` on 
-your host. See _The Fast Track to Safe and Secure PHP Sessions_, linked below
-in the resources.
+It is also **very** important that you update your PHP Session settings in 
+`php.ini` on your host. See _The Fast Track to Safe and Secure PHP Sessions_, 
+linked below in the resources.
  
 # Resources
 
