@@ -41,7 +41,7 @@ class SessionTest extends PHPUnit_Framework_TestCase
             [
                 sprintf('Set-Cookie: PHPSESSID=%s; Secure; HttpOnly; SameSite=Strict', $c->id()),
             ],
-            $t->list()
+            $t->ls()
         );
     }
 }

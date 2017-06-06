@@ -116,7 +116,7 @@ class Cookie
     protected function replace($name, $value)
     {
         $cookieList = [];
-        foreach ($this->header->list() as $hdr) {
+        foreach ($this->header->ls() as $hdr) {
             if (0 === stripos($hdr, 'Set-Cookie: ')) {
                 // found "Set-Cookie"
                 if (0 !== stripos($hdr, sprintf('Set-Cookie: %s=%s', $name, $value))) {

@@ -52,7 +52,7 @@ class PhpHeader implements HeaderInterface
      *
      * @return array
      */
-    public function list()
+    public function ls()
     {
         return headers_list();
     }

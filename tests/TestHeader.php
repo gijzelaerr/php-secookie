@@ -45,7 +45,7 @@ class TestHeader implements HeaderInterface
         $this->headerList[] = $header;
     }
 
-    public function list()
+    public function ls()
     {
         return array_values($this->headerList);
     }

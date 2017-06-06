@@ -42,7 +42,7 @@ class CookieTest extends PHPUnit_Framework_TestCase
             [
                 'Set-Cookie: foo=bar; Secure; HttpOnly; SameSite=Strict',
             ],
-            $t->list()
+            $t->ls()
         );
     }
 }

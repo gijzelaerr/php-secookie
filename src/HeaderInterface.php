@@ -46,5 +46,5 @@ interface HeaderInterface
      *
      * @return array
      */
-    public function list();
+    public function ls();
 }
