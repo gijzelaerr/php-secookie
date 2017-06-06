@@ -28,7 +28,7 @@ use DateInterval;
 use DateTime;
 use fkooman\Cookie\Exception\SessionException;
 
-class Session extends Cookie
+class Session extends Cookie implements SessionInterface
 {
     /** @var array */
     private $sessionOptions;
