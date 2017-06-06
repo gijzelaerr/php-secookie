@@ -9,12 +9,18 @@ Very simple Cookie and PHP Session library.
   `Secure`, `SameSite` are not the default);
 * [delight-im/cookie](https://github.com/delight-im/PHP-Cookie) and 
   [paragonie/cookie](https://github.com/paragonie/PHP-Cookie), in addition to 
-  requiring PHP >= 5.6, parse cookies, which is a liability;
+  requiring PHP >= 5.6, parse cookies, which is best avoided for security
+  reasons;
 * Allow binding PHP Sessions to "Domain" and "Path" (see below);
 * Easy to use PHP Session API;
 * Uses a "Canary" to regularly refresh session ID;
 * Implements `SameSite`;
 * Unit tests with PHPUnit;
+
+Many of the ideas came from the resources below,
+[delight-im/cookie](https://github.com/delight-im/PHP-Cookie) and 
+[Airship](https://github.com/paragonie/airship)'s implementation of (secure) 
+sessions.
 
 # Cookies
 
