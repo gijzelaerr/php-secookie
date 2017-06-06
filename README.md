@@ -5,22 +5,23 @@ Very simple Cookie and PHP Session library.
 # Why
 
 * PHP >= 5.4 support for CentOS 7;
-* Replace complicated `setcookie()` that is not secure by default;
+* Replace complicated `setcookie()` which is not secure by default (`HttpOnly`, 
+  `Secure`, `SameSite` are not the default;
 * [delight-im/cookie](https://github.com/delight-im/PHP-Cookie) and 
   [paragonie/cookie](https://github.com/paragonie/PHP-Cookie), in addition to 
   requiring PHP >= 5.6, parse cookies, which is a liability;
 * Allow binding PHP Sessions to "Domain" and "Path" (see below);
-* Clean PHP Session API;
-* Uses a "Canary";
+* Easy to use PHP Session API;
+* Uses a "Canary" to regularly refresh session ID;
 * Implements `SameSite`;
-* Unit testing using PHPUnit;
+* Unit tests with PHPUnit;
 
 # Session Binding
 
 Session binding is implemented to avoid using a PHP Session meant for one 
-"Domain" being used at another Domain. This is important if you are hosting 
-a "multi-site" application where the site runs at different domains, but with 
-the same PHP session storage.
+"Domain" or "Path" being used at another Domain or Path. This is important if 
+you are hosting a "multi-site" application where the site is running at 
+multiple domains, but shares the same PHP session storage.
 
 This can be used like this:
 
