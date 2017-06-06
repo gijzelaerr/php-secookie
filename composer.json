@@ -11,7 +11,7 @@
             "fkooman\\Cookie\\Tests\\": "tests/"
         }
     },
-    "description": "Very simple Cookie and Session library",
+    "description": "Very simple Cookie and PHP Session library",
     "license": "MIT",
     "name": "fkooman/php-secookie",
     "require": {
