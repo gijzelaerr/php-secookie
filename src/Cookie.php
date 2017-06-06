@@ -33,7 +33,8 @@ class Cookie
     private $header;
 
     /**
-     * @param array $cookieOptions
+     * @param array                $cookieOptions
+     * @param HeaderInterface|null $header
      */
     public function __construct(array $cookieOptions = [], HeaderInterface $header = null)
     {
@@ -54,11 +55,22 @@ class Cookie
         $this->header = $header;
     }
 
+    /**
+     * Delete a cookie.
+     *
+     * @param string $name
+     */
     public function delete($name)
     {
         self::set($name, '');
     }
 
+    /**
+     * Set a cookie value.
+     *
+     * @param string $name  the cookie name
+     * @param string $value the cookie value
+     */
     public function set($name, $value)
     {
         $attributeValueList = [];
@@ -79,7 +91,10 @@ class Cookie
         if (!is_null($this->cookieOptions['Max-Age'])) {
             $attributeValueList[] = sprintf('Max-Age=%d', $this->cookieOptions['Max-Age']);
         }
-        $attributeValueList[] = sprintf('SameSite=%s', $this->cookieOptions['SameSite']);
+
+        if (!is_null($this->cookieOptions['SameSite'])) {
+            $attributeValueList[] = sprintf('SameSite=%s', $this->cookieOptions['SameSite']);
+        }
 
         $this->header->set(
             sprintf(
@@ -88,12 +103,12 @@ class Cookie
                 $value,
                 implode('; ', $attributeValueList)
             ),
-            false   // do not replace
+            false // do not replace
         );
     }
 
     /**
-     * Replace an existing HTTP cookie.
+     * Replace an existing cookie.
      *
      * @param string $name  the cookie name
      * @param string $value the cookie value

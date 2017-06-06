@@ -34,7 +34,8 @@ class Session extends Cookie
     private $sessionOptions;
 
     /**
-     * @param array $sessionOptions
+     * @param array                $sessionOptions
+     * @param HeaderInterface|null $header
      */
     public function __construct(array $sessionOptions = [], HeaderInterface $header = null)
     {
@@ -63,22 +64,43 @@ class Session extends Cookie
         $this->replace(session_name(), session_id());
     }
 
+    /**
+     * Get the session ID.
+     *
+     * @return string
+     */
     public function id()
     {
         return session_id();
     }
 
+    /**
+     * Regenerate the session ID.
+     *
+     * @param bool $deleteOldSession
+     */
     public function regenerate($deleteOldSession = false)
     {
         session_regenerate_id($deleteOldSession);
         $this->replace(session_name(), session_id());
     }
 
+    /**
+     * Set session value.
+     *
+     * @param string $key
+     * @param mixed  $value
+     */
     public function set($key, $value)
     {
         $_SESSION[$key] = $value;
     }
 
+    /**
+     * Delete session key/value.
+     *
+     * @param string $key
+     */
     public function delete($key)
     {
         if (!$this->has($key)) {
@@ -88,11 +110,25 @@ class Session extends Cookie
         unset($_SESSION[$key]);
     }
 
+    /**
+     * Test if session key exists.
+     *
+     * @param string $key
+     *
+     * @return bool
+     */
     public function has($key)
     {
         return array_key_exists($key, $_SESSION);
     }
 
+    /**
+     * Get session value.
+     *
+     * @param string $key
+     *
+     * @return mixed
+     */
     public function get($key)
     {
         if (!$this->has($key)) {
@@ -102,6 +138,9 @@ class Session extends Cookie
         return $_SESSION[$key];
     }
 
+    /**
+     * Empty the session.
+     */
     public function destroy()
     {
         $_SESSION = [];
@@ -135,6 +174,9 @@ class Session extends Cookie
         $this->sessionBinding('PathBinding');
     }
 
+    /**
+     * @param string $key
+     */
     private function sessionBinding($key)
     {
         if (!is_null($this->sessionOptions[$key])) {
