@@ -113,13 +113,13 @@ class Cookie
      * @param string $name  the cookie name
      * @param string $value the cookie value
      */
-    protected function replace($name, $value)
+    public function replace($name, $value)
     {
         $cookieList = [];
         foreach ($this->header->ls() as $hdr) {
             if (0 === stripos($hdr, 'Set-Cookie: ')) {
                 // found "Set-Cookie"
-                if (0 !== stripos($hdr, sprintf('Set-Cookie: %s=%s', $name, $value))) {
+                if (0 !== stripos($hdr, sprintf('Set-Cookie: %s=', $name))) {
                     // not the one we want to replace, add to backup list
                     $cookieList[] = $hdr;
                 }

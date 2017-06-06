@@ -29,20 +29,60 @@ use PHPUnit_Framework_TestCase;
 
 class CookieTest extends PHPUnit_Framework_TestCase
 {
-    /**
-     * @runInSeparateProcess
-     */
     public function testSimple()
     {
-        $t = new TestHeader();
+    }
 
+    public function testDeleteCookie()
+    {
+        $t = new TestHeader();
         $c = new Cookie([], $t);
-        $c->set('foo', 'bar');
+        $c->delete('foo');
         $this->assertSame(
             [
-                'Set-Cookie: foo=bar; Secure; HttpOnly; SameSite=Strict',
+                'Set-Cookie: foo=; Secure; HttpOnly; SameSite=Strict',
             ],
             $t->ls()
         );
+    }
+
+    public function testReplaceCookie()
+    {
+        $t = new TestHeader();
+        $c = new Cookie([], $t);
+        $c->set('foo', 'bar');
+        $c->set('bar', 'baz');
+        $c->replace('foo', '123');
+        $this->assertSame(
+            [
+                'Set-Cookie: bar=baz; Secure; HttpOnly; SameSite=Strict',
+                'Set-Cookie: foo=123; Secure; HttpOnly; SameSite=Strict',
+            ],
+            $t->ls()
+        );
+    }
+
+    public function testAttributeValues()
+    {
+        $t = new TestHeader();
+        $c = new Cookie(
+            [
+                'Path' => '/foo/',
+                'Domain' => 'www.example.org',
+                'Max-Age' => 12345,
+            ],
+            $t
+        );
+        $c->set('foo', 'bar');
+        $this->assertSame(
+            [
+                'Set-Cookie: foo=bar; Secure; HttpOnly; Path=/foo/; Domain=www.example.org; Max-Age=12345; SameSite=Strict',
+            ],
+            $t->ls()
+        );
+    }
+
+    public function testDomain()
+    {
     }
 }
