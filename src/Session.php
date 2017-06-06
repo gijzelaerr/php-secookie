@@ -41,7 +41,7 @@ class Session extends Cookie
     {
         $this->sessionOptions = array_merge(
             [
-                // this includes the default settings from Cookie...
+                'CanaryExpiry' => 'PT01H',
                 'DomainBinding' => null,       // also bind session to Domain
                 'PathBinding' => null,         // also bind session to Path
             ],
@@ -156,7 +156,7 @@ class Session extends Cookie
             $_SESSION['Canary'] = $dateTime->format('Y-m-d H:i:s');
         } else {
             $canaryDateTime = new DateTime($_SESSION['Canary']);
-            $canaryDateTime->add(new DateInterval('PT01H'));
+            $canaryDateTime->add(new DateInterval($this->sessionOptions['CanaryExpiry']));
             if ($canaryDateTime < $dateTime) {
                 $this->regenerate(true);
                 $_SESSION['Canary'] = $dateTime->format('Y-m-d H:i:s');

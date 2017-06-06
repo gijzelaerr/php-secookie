@@ -68,4 +68,160 @@ class SessionTest extends PHPUnit_Framework_TestCase
             $t->ls()
         );
     }
+
+    /**
+     * @runInSeparateProcess
+     * @expectedException \fkooman\Cookie\Exception\SessionException
+     * @expectedExceptionMessage session bound to DomainBinding, we got "www.example.org", but expected "www.example.com"
+     */
+    public function testDomainBinding()
+    {
+        $t = new TestHeader();
+        $c = new Session(
+            [
+                'DomainBinding' => 'www.example.org',
+            ],
+            $t
+        );
+        $c = new Session(
+            [
+                'DomainBinding' => 'www.example.com',
+            ],
+            $t
+        );
+    }
+
+    /**
+     * @runInSeparateProcess
+     * @expectedException \fkooman\Cookie\Exception\SessionException
+     * @expectedExceptionMessage session bound to PathBinding, we got "/foo/", but expected "/bar/"
+     */
+    public function testPathBinding()
+    {
+        $t = new TestHeader();
+        $c = new Session(
+            [
+                'PathBinding' => '/foo/',
+            ],
+            $t
+        );
+        $c = new Session(
+            [
+                'PathBinding' => '/bar/',
+            ],
+            $t
+        );
+    }
+
+    /**
+     * @runInSeparateProcess
+     */
+    public function testSetGet()
+    {
+        $t = new TestHeader();
+        $c = new Session([], $t);
+        $c->set('foo', 'bar');
+        $this->assertSame('bar', $c->get('foo'));
+    }
+
+    /**
+     * @runInSeparateProcess
+     * @expectedException \fkooman\Cookie\Exception\SessionException
+     * @expectedExceptionMessage key "foo" not available in session
+     */
+    public function testGetMissing()
+    {
+        $t = new TestHeader();
+        $c = new Session([], $t);
+        $c->get('foo');
+    }
+
+    /**
+     * @runInSeparateProcess
+     */
+    public function testDelete()
+    {
+        $t = new TestHeader();
+        $c = new Session([], $t);
+        $c->set('foo', 'bar');
+        $c->delete('foo');
+    }
+
+    /**
+     * @runInSeparateProcess
+     * @expectedException \fkooman\Cookie\Exception\SessionException
+     * @expectedExceptionMessage key "foo" not available in session
+     */
+    public function testDeleteMissing()
+    {
+        $t = new TestHeader();
+        $c = new Session([], $t);
+        $c->delete('foo');
+    }
+
+    /**
+     * @runInSeparateProcess
+     */
+    public function testExpiredCanary()
+    {
+        $t = new TestHeader();
+        $c = new Session(
+            [
+                'CanaryExpiry' => 'PT01S',
+            ],
+            $t
+        );
+        $firstId = $c->id();
+        sleep(2);
+        $c = new Session(
+            [
+                'CanaryExpiry' => 'PT01S',
+            ],
+            $t
+        );
+        $secondId = $c->id();
+        $this->assertNotSame($firstId, $secondId);
+    }
+
+    /**
+     * @runInSeparateProcess
+     */
+    public function testNotExpiredCanary()
+    {
+        $t = new TestHeader();
+        $c = new Session(
+            [
+                'CanaryExpiry' => 'PT01S',
+            ],
+            $t
+        );
+        $firstId = $c->id();
+        $c = new Session(
+            [
+                'CanaryExpiry' => 'PT01S',
+            ],
+            $t
+        );
+        $secondId = $c->id();
+        $this->assertSame($firstId, $secondId);
+    }
+
+    /**
+     * @runInSeparateProcess
+     */
+    public function testDestroy()
+    {
+        $t = new TestHeader();
+        $c = new Session([], $t);
+        $firstId = $c->id();
+        $c->destroy();
+        $secondId = $c->id();
+        $this->assertNotSame($firstId, $secondId);
+        $this->assertSame(
+            [
+                sprintf('Set-Cookie: PHPSESSID=%s; Secure; HttpOnly; SameSite=Strict', $secondId),
+            ],
+            $t->ls()
+        );
+    }
 }

@@ -28,7 +28,7 @@ This can be used like this:
     $session = new Session(
         [
             'DomainBinding' => 'www.example.org',
-            'PathBinding' => '/foo',
+            'PathBinding' => '/foo/',
         ]
     );
 
