@@ -22,9 +22,9 @@
  * SOFTWARE.
  */
 
-namespace fkooman\Cookie\Tests;
+namespace fkooman\SeCookie\Tests;
 
-use fkooman\Cookie\Session;
+use fkooman\SeCookie\Session;
 use PHPUnit_Framework_TestCase;
 
 class SessionTest extends PHPUnit_Framework_TestCase
@@ -71,7 +71,7 @@ class SessionTest extends PHPUnit_Framework_TestCase
 
     /**
      * @runInSeparateProcess
-     * @expectedException \fkooman\Cookie\Exception\SessionException
+     * @expectedException \fkooman\SeCookie\Exception\SessionException
      * @expectedExceptionMessage session bound to DomainBinding, we got "www.example.org", but expected "www.example.com"
      */
     public function testDomainBinding()
@@ -93,7 +93,7 @@ class SessionTest extends PHPUnit_Framework_TestCase
 
     /**
      * @runInSeparateProcess
-     * @expectedException \fkooman\Cookie\Exception\SessionException
+     * @expectedException \fkooman\SeCookie\Exception\SessionException
      * @expectedExceptionMessage session bound to PathBinding, we got "/foo/", but expected "/bar/"
      */
     public function testPathBinding()
@@ -126,7 +126,7 @@ class SessionTest extends PHPUnit_Framework_TestCase
 
     /**
      * @runInSeparateProcess
-     * @expectedException \fkooman\Cookie\Exception\SessionException
+     * @expectedException \fkooman\SeCookie\Exception\SessionException
      * @expectedExceptionMessage key "foo" not available in session
      */
     public function testGetMissing()
@@ -149,7 +149,7 @@ class SessionTest extends PHPUnit_Framework_TestCase
 
     /**
      * @runInSeparateProcess
-     * @expectedException \fkooman\Cookie\Exception\SessionException
+     * @expectedException \fkooman\SeCookie\Exception\SessionException
      * @expectedExceptionMessage key "foo" not available in session
      */
     public function testDeleteMissing()

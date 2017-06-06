@@ -7,8 +7,8 @@
     ],
     "autoload": {
         "psr-4": {
-            "fkooman\\Cookie\\": "src/",
-            "fkooman\\Cookie\\Tests\\": "tests/"
+            "fkooman\\SeCookie\\": "src/",
+            "fkooman\\SeCookie\\Tests\\": "tests/"
         }
     },
     "description": "Very simple Cookie and PHP Session library",

@@ -22,9 +22,9 @@
  * SOFTWARE.
  */
 
-namespace fkooman\Cookie\Tests;
+namespace fkooman\SeCookie\Tests;
 
-use fkooman\Cookie\HeaderInterface;
+use fkooman\SeCookie\HeaderInterface;
 
 class TestHeader implements HeaderInterface
 {

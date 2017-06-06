@@ -22,11 +22,11 @@
  * SOFTWARE.
  */
 
-namespace fkooman\Cookie;
+namespace fkooman\SeCookie;
 
 use DateInterval;
 use DateTime;
-use fkooman\Cookie\Exception\SessionException;
+use fkooman\SeCookie\Exception\SessionException;
 
 class Session extends Cookie implements SessionInterface
 {

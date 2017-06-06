@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-namespace fkooman\Cookie;
+namespace fkooman\SeCookie;
 
 interface SessionInterface
 {

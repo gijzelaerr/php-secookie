@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-namespace fkooman\Cookie\Exception;
+namespace fkooman\SeCookie\Exception;
 
 use Exception;
 
