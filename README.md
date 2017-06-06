@@ -34,14 +34,9 @@ This can be used like this:
 This does *not* restrict the `Domain` and `Path` options for the Cookie, to 
 modify these you'd have to also specify the `Domain` and `Path` options, but
 leaving them empty can result in more secure cookies as they will be 
-automatically bound to the "Path" and "Domain" that set them.
-
-    $session = new Session(
-        [
-            'DomainBinding' => 'www.example.org',
-            'PathBinding' => '/foo',
-        ]
-    );
+automatically bound to the "Path" and "Domain" that set them, see 
+_The definitive guide to cookie domains and why a www-prefix makes your website safer_
+linked in the resources below.
 
 # Security
 
