@@ -1,0 +1,24 @@
+{
+    "authors": [
+        {
+            "email": "fkooman@tuxed.net",
+            "name": "Fran\u00e7ois Kooman"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "fkooman\\Cookie\\": "src/",
+            "fkooman\\Cookie\\Tests\\": "tests/"
+        }
+    },
+    "description": "Very simple Cookie and Session library",
+    "license": "MIT",
+    "name": "fkooman/php-secookie",
+    "require": {
+        "php": ">=5.4"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^5.7"
+    },
+    "type": "library"
+}

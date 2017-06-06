@@ -1,0 +1,55 @@
+# Introduction
+
+Very simple Cookie and PHP Session library.
+
+# Why
+
+* PHP >= 5.4 support for CentOS 7;
+* Replace complicated `setcookie()` that is not secure by default;
+* [delight-im/cookie](https://github.com/delight-im/PHP-Cookie) and 
+  [paragonie/cookie](https://github.com/paragonie/PHP-Cookie), in addition to 
+  requiring PHP >= 5.6, parse cookies, which is a liability;
+* Allow binding PHP Sessions to "Domain" and "Path" (see below);
+* Clean PHP Session API;
+* Uses a "Canary";
+* Implements `SameSite`;
+* Unit testing using PHPUnit;
+
+# Session Binding
+
+Session binding is implemented to avoid using a PHP Session meant for one 
+"Domain" being used at another Domain. This is important if you are hosting 
+a "multi-site" application where the site runs at different domains, but with 
+the same PHP session storage.
+
+This can be used like this:
+
+    $session = new Session(
+        [
+            'DomainBinding' => 'www.example.org',
+            'PathBinding' => '/foo',
+        ]
+    );
+
+This does *not* restrict the `Domain` and `Path` options for the Cookie, to 
+modify these you'd have to also specify the `Domain` and `Path` options, but
+leaving them empty can result in more secure cookies as they will be 
+automatically bound to the "Path" and "Domain" that set them.
+
+    $session = new Session(
+        [
+            'DomainBinding' => 'www.example.org',
+            'PathBinding' => '/foo',
+        ]
+    );
+
+# Security
+
+It is also **very** important that you update your PHP settings in `php.ini` on 
+your host. See _The Fast Track to Safe and Secure PHP Sessions_, linked below
+in the resources.
+ 
+# Resources
+
+* [The Fast Track to Safe and Secure PHP Sessions](https://paragonie.com/blog/2015/04/fast-track-safe-and-secure-php-sessions)
+* [The definitive guide to cookie domains and why a www-prefix makes your website safer](http://erik.io/blog/2014/03/04/definitive-guide-to-cookie-domains/)
