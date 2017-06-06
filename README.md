@@ -16,7 +16,60 @@ Very simple Cookie and PHP Session library.
 * Implements `SameSite`;
 * Unit tests with PHPUnit;
 
-# Session Binding
+# Cookies
+
+Setting a cookie, i.e. add the `Set-Cookie` header is straightforward:
+
+    $cookie = new Cookie();
+    $cookie->set('foo', 'bar');
+
+This will set the cookie using the `Secure`, `HttpOnly` and `SameSite=Strict` 
+values. 
+
+The following configuration options are supported:
+
+* `Secure`: `bool` (default: `true`)
+* `HttpOnly`: `bool` (default: `true`)
+* `Path`: `string`|`null` (default: `null`)
+* `Domain`: `string`|`null` (default: `null`)
+* `Max-Age`: `int`|`null` (default: `null`)
+* `SameSite`: `Strict`|`Lax`|`null` (default: `Strict`)
+
+For example, to limit a browser to only send the cookie to the `/foo/` path and
+use the `Lax` option for `SameSite`:
+
+    $cookie = new Cookie(
+        [
+            'Path' => '/foo/',
+            'SameSite' => 'Lax',
+        ]
+    );
+    $cookie->set('foo', 'bar');
+
+You can delete a cookie, i.e. set the value to `""` by using the `delete()` 
+method:
+
+    $cookie->delete('foo');
+
+# Sessions
+
+Sessions will use the same defaults as Cookies, so you'll get secure sessions
+out of the box. 
+
+    $session = new Session();
+    $session->set('foo', 'bar');
+
+Note that the values here are stored _inside_ the session, and not sent to the
+browser!
+
+You can destroy a session, i.e. empty the `$_SESSION` variable and regenerate 
+the session ID by calling the `destroy()` method:
+
+    $session->destroy();
+
+There are methods for `get()`, `set()`, `has()` and `delete()` as well.
+
+## Session Binding
 
 Session binding is implemented to avoid using a PHP Session meant for one 
 "Domain" or "Path" being used at another Domain or Path. This is important if 
@@ -41,7 +94,7 @@ linked in the resources below.
 
 # Security
 
-It is also **very** important that you update your PHP Session settings in 
+It is **very** important that you update your PHP Session settings in 
 `php.ini` on your host. See _The Fast Track to Safe and Secure PHP Sessions_, 
 linked below in the resources.
  
