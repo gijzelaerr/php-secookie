@@ -103,11 +103,9 @@ class Session extends Cookie implements SessionInterface
      */
     public function delete($key)
     {
-        if (!$this->has($key)) {
-            throw new SessionException(sprintf('key "%s" not available in session', $key));
+        if ($this->has($key)) {
+            unset($_SESSION[$key]);
         }
-
-        unset($_SESSION[$key]);
     }
 
     /**

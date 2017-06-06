@@ -149,8 +149,6 @@ class SessionTest extends PHPUnit_Framework_TestCase
 
     /**
      * @runInSeparateProcess
-     * @expectedException \fkooman\SeCookie\Exception\SessionException
-     * @expectedExceptionMessage key "foo" not available in session
      */
     public function testDeleteMissing()
     {
