@@ -14,6 +14,7 @@ Very simple Cookie and PHP Session library.
 * Allow binding PHP Sessions to "Domain" and "Path" (see below);
 * Easy to use PHP Session API;
 * Uses a "Canary" to regularly refresh session ID;
+* Expires the PHP Session on the server;
 * Implements `SameSite`;
 * Unit tests with PHPUnit;
 
@@ -73,7 +74,9 @@ the session ID by calling the `destroy()` method:
 
     $session->destroy();
 
-There are methods for `get()`, `set()`, `has()` and `delete()` as well.
+There are methods for `get()`, `set()`, `has()`, `delete()` and `renegerate()` 
+as well. It is recommended to call `regenerate()` before storing important 
+information in the session, for example after user authentication.
 
 ## Session Binding
 
@@ -97,6 +100,24 @@ leaving them empty can result in more secure cookies as they will be
 automatically bound to the "Path" and "Domain" that set them, see 
 _The definitive guide to cookie domains and why a www-prefix makes your website safer_
 linked in the resources below.
+
+## Session Expiry
+
+The PHP Session typically lives as long as the user's user agent, i.e. browser, 
+runs. On many platforms the browser is not closed anymore and remains open 
+indefinitely, or as least until the device is restarted, e.g. on mobile.
+
+For some use cases it may be necessary to expire sessions on the server, this 
+can be done with the `SessionExpiry` configuration option. The default is 8 
+hours.
+
+    $session = new Session(
+        [
+            'SessionExpiry' => 'PT08H',
+        ]
+    );
+
+To disable session expiry, you can set the `SessionExpiry` to `null`.
 
 # Security
 

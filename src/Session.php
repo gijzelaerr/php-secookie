@@ -41,9 +41,10 @@ class Session extends Cookie implements SessionInterface
     {
         $this->sessionOptions = array_merge(
             [
-                'CanaryExpiry' => 'PT01H',
-                'DomainBinding' => null,       // also bind session to Domain
-                'PathBinding' => null,         // also bind session to Path
+                'SessionExpiry' => 'PT08H', // expire session (8 hours)
+                'CanaryExpiry' => 'PT01H',  // regenerate session ID (1 hour)
+                'DomainBinding' => null,    // also bind session to Domain
+                'PathBinding' => null,      // also bind session to Path
             ],
             $sessionOptions
         );
@@ -60,6 +61,7 @@ class Session extends Cookie implements SessionInterface
         $this->sessionCanary();
         $this->domainBinding();
         $this->pathBinding();
+        $this->sessionExpiry();
 
         $this->replace(session_name(), session_id());
     }
@@ -148,10 +150,11 @@ class Session extends Cookie implements SessionInterface
     private function sessionCanary()
     {
         $dateTime = new DateTime();
-        if (!array_key_exists('Canary', $_SESSION)) {
+        if (!array_key_exists('Canary', $_SESSION) || !array_key_exists('Expiry', $_SESSION)) {
             $_SESSION = [];
             $this->regenerate(true);
             $_SESSION['Canary'] = $dateTime->format('Y-m-d H:i:s');
+            $_SESSION['Expiry'] = $dateTime->format('Y-m-d H:i:s');
         } else {
             $canaryDateTime = new DateTime($_SESSION['Canary']);
             $canaryDateTime->add(new DateInterval($this->sessionOptions['CanaryExpiry']));
@@ -183,6 +186,21 @@ class Session extends Cookie implements SessionInterface
             }
             if ($this->sessionOptions[$key] !== $_SESSION[$key]) {
                 throw new SessionException(sprintf('session bound to %s, we got "%s", but expected "%s"', $key, $_SESSION[$key], $this->sessionOptions[$key]));
+            }
+        }
+    }
+
+    /**
+     * Expire session after a specified time.
+     */
+    private function sessionExpiry()
+    {
+        $dateTime = new DateTime();
+        if (!is_null($this->sessionOptions['SessionExpiry'])) {
+            $expiryDateTime = new DateTime($_SESSION['Expiry']);
+            $expiryDateTime->add(new DateInterval($this->sessionOptions['SessionExpiry']));
+            if ($expiryDateTime < $dateTime) {
+                $this->destroy();
             }
         }
     }

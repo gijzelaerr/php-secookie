@@ -169,6 +169,7 @@ class SessionTest extends PHPUnit_Framework_TestCase
             ],
             $t
         );
+        $c->set('foo', 'bar');
         $firstId = $c->id();
         sleep(2);
         $c = new Session(
@@ -179,6 +180,7 @@ class SessionTest extends PHPUnit_Framework_TestCase
         );
         $secondId = $c->id();
         $this->assertNotSame($firstId, $secondId);
+        $this->assertTrue($c->has('foo'));
     }
 
     /**
@@ -202,6 +204,30 @@ class SessionTest extends PHPUnit_Framework_TestCase
         );
         $secondId = $c->id();
         $this->assertSame($firstId, $secondId);
+    }
+
+    /**
+     * @runInSeparateProcess
+     */
+    public function testExpiredSession()
+    {
+        $t = new TestHeader();
+        $c = new Session(
+            [
+                'SessionExpiry' => 'PT01S',
+            ],
+            $t
+        );
+        $c->set('foo', 'bar');
+        $this->assertTrue($c->has('foo'));
+        sleep(2);
+        $c = new Session(
+            [
+                'SessionExpiry' => 'PT01S',
+            ],
+            $t
+        );
+        $this->assertFalse($c->has('foo'));
     }
 
     /**
