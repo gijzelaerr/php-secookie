@@ -2,7 +2,7 @@
 
 # Introduction
 
-Very simple Cookie and PHP Session library.
+Secure Cookie and Session library for PHP.
 
 # Why
 
