@@ -1,3 +1,5 @@
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/fkooman/php-secookie/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/fkooman/php-secookie/?branch=master)
+
 # Introduction
 
 Very simple Cookie and PHP Session library.
