@@ -45,6 +45,7 @@ class Session extends Cookie implements SessionInterface
                 'CanaryExpiry' => 'PT01H',  // regenerate session ID (1 hour)
                 'DomainBinding' => null,    // also bind session to Domain
                 'PathBinding' => null,      // also bind session to Path
+                'SessionName' => null,      // override the default session name
             ],
             $sessionOptions
         );
@@ -53,6 +54,10 @@ class Session extends Cookie implements SessionInterface
             $header = new PhpHeader();
         }
         parent::__construct($sessionOptions, $header);
+
+        if (!is_null($this->sessionOptions['SessionName'])) {
+            session_name($this->sessionOptions['SessionName']);
+        }
 
         if (PHP_SESSION_ACTIVE !== session_status()) {
             session_start();

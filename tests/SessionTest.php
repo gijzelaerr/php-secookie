@@ -48,6 +48,22 @@ class SessionTest extends PHPUnit_Framework_TestCase
     /**
      * @runInSeparateProcess
      */
+    public function testSessionName()
+    {
+        $t = new TestHeader();
+        $c = new Session(['SessionName' => 'SID'], $t);
+        $c->set('foo', 'bar');
+        $this->assertSame(
+            [
+                sprintf('Set-Cookie: SID=%s; Secure; HttpOnly; SameSite=Strict', $c->id()),
+            ],
+            $t->ls()
+        );
+    }
+
+    /**
+     * @runInSeparateProcess
+     */
     public function testRegenerate()
     {
         $t = new TestHeader();
