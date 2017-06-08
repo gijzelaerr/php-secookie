@@ -26,7 +26,7 @@ Many of the ideas came from the resources below,
 sessions.
 
 We do _NOT_ support the (deprecated) `Expires` attribute value as `Max-Age` is 
-supported by all current, i.e. >= IE 11, browsers on desktop on mobile.
+supported by all current, i.e. >= IE 11, browsers on desktop and mobile.
 
 # Cookies
 
