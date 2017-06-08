@@ -147,7 +147,31 @@ To disable session expiry, you can set the `SessionExpiry` to `null`.
 It is **very** important that you update your PHP Session settings in 
 `php.ini` on your host. See _The Fast Track to Safe and Secure PHP Sessions_, 
 linked below in the resources.
- 
+
+    ;
+    ; session
+    ;
+    ; @see https://paragonie.com/blog/2015/04/fast-track-safe-and-secure-php-sessions
+    ; @see https://secure.php.net/manual/en/session.configuration.php
+    ;
+    session.save_handler = files
+    session.save_path = "/var/lib/php/session"
+    session.use_cookies = 1
+    session.use_only_cookies = 1
+
+    ; PHP < 7.1
+    session.hash_function = sha256
+    session.hash_bits_per_character = 5
+    session.entropy_file = /dev/urandom
+    session.entropy_length = 32
+
+    ; PHP >= 5.5.2
+    ;session.use_strict_mode = 1
+
+    ; PHP >= 7.1
+    ;session.sid_length = 52
+    ;session.sid_bits_per_character = 5
+
 # Resources
 
 * [The Fast Track to Safe and Secure PHP Sessions](https://paragonie.com/blog/2015/04/fast-track-safe-and-secure-php-sessions)
