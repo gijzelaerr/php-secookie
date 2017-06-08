@@ -17,13 +17,16 @@ Very simple Cookie and PHP Session library.
 * Easy to use PHP Session API;
 * Uses a "Canary" to regularly refresh session ID;
 * Expires the PHP Session on the server;
-* Implements `SameSite`;
+* Implements Same-Site attribute value;
 * Unit tests with PHPUnit;
 
 Many of the ideas came from the resources below,
 [delight-im/cookie](https://github.com/delight-im/PHP-Cookie) and 
 [Airship](https://github.com/paragonie/airship)'s implementation of (secure) 
 sessions.
+
+We do _NOT_ support the (deprecated) `Expires` attribute value as `Max-Age` is 
+supported by all current, i.e. >= IE 11, browsers on desktop on mobile.
 
 # Cookies
 
@@ -131,3 +134,5 @@ linked below in the resources.
 
 * [The Fast Track to Safe and Secure PHP Sessions](https://paragonie.com/blog/2015/04/fast-track-safe-and-secure-php-sessions)
 * [The definitive guide to cookie domains and why a www-prefix makes your website safer](http://erik.io/blog/2014/03/04/definitive-guide-to-cookie-domains/)
+* [Same-Site Cookies](https://tools.ietf.org/html/draft-ietf-httpbis-cookie-same-site-00)
+
