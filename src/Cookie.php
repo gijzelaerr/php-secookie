@@ -24,7 +24,9 @@
 
 namespace fkooman\SeCookie;
 
-class Cookie
+use fkooman\SeCookie\Exception\CookieException;
+
+class Cookie implements CookieInterface
 {
     /** @var array */
     private $cookieOptions;
@@ -63,6 +65,34 @@ class Cookie
     public function delete($name)
     {
         self::set($name, '');
+    }
+
+    /**
+     * Test if cookie exists.
+     *
+     * @param string $name
+     *
+     * @return bool
+     */
+    public function has($name)
+    {
+        return array_key_exists($name, $_COOKIE);
+    }
+
+    /**
+     * Get cookie value.
+     *
+     * @param string $name
+     *
+     * @return string
+     */
+    public function get($name)
+    {
+        if (!$this->has($name)) {
+            throw new CookieException(sprintf('cookie "%s" not available', $name));
+        }
+
+        return $_COOKIE[$name];
     }
 
     /**
@@ -113,7 +143,7 @@ class Cookie
      * @param string $name  the cookie name
      * @param string $value the cookie value
      */
-    public function replace($name, $value)
+    protected function replace($name, $value)
     {
         $cookieList = [];
         foreach ($this->header->ls() as $hdr) {

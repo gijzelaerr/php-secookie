@@ -46,21 +46,21 @@ class CookieTest extends PHPUnit_Framework_TestCase
         );
     }
 
-    public function testReplaceCookie()
-    {
-        $t = new TestHeader();
-        $c = new Cookie([], $t);
-        $c->set('foo', 'bar');
-        $c->set('bar', 'baz');
-        $c->replace('foo', '123');
-        $this->assertSame(
-            [
-                'Set-Cookie: bar=baz; Secure; HttpOnly; SameSite=Strict',
-                'Set-Cookie: foo=123; Secure; HttpOnly; SameSite=Strict',
-            ],
-            $t->ls()
-        );
-    }
+//    public function testReplaceCookie()
+//    {
+//        $t = new TestHeader();
+//        $c = new Cookie([], $t);
+//        $c->set('foo', 'bar');
+//        $c->set('bar', 'baz');
+//        $c->replace('foo', '123');
+//        $this->assertSame(
+//            [
+//                'Set-Cookie: bar=baz; Secure; HttpOnly; SameSite=Strict',
+//                'Set-Cookie: foo=123; Secure; HttpOnly; SameSite=Strict',
+//            ],
+//            $t->ls()
+//        );
+//    }
 
     public function testAttributeValues()
     {
