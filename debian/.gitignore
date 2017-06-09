@@ -1,0 +1,6 @@
+debhelper-build-stamp
+files
+php-secookie.debhelper.log
+php-secookie.substvars
+php-secookie/
+
